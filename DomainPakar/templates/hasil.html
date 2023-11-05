@@ -1,0 +1,78 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+     <div class="row">
+          <div class="col-8">
+               <h2>Hasil Analisa keluhan dan Diagnosis Anda menunjukkan</h2>
+          </div>
+          <div class="col-12 col-lg-8">
+               <p class="fs-6">Berdasarkan keluhan yang telah anda konsultasikan ke dalam sistem kami, maka kami
+                    dapat menyimpulkan bahwa Anda mengalami penyakit:</p>
+          </div>
+          <div class="col-12">
+               <hr>
+               <h4 class="mb-3">Detail Biodata</h4>
+              <p for="" class="">No Rekam Medis
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    : &nbsp;{{ pasien.IDPasien }}</p>
+               <p for="" class="">Nama
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    : &nbsp;{{ pasien.NamaLengkap }}</p>
+               <p for="">Tanggal Lahir &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :
+                    &nbsp;{{ pasien.TanggalLahir }}</p>
+               <p for="">Jenis Kelamin &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                    &nbsp;{{ pasien.JenisKelamin }}</p>
+               <p for="">Nomot Telepon &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &nbsp;{{ pasien.NomorTelp }}</p>
+               <p for="">Alamat
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    : &nbsp;{{ pasien.Alamat }}</p>
+               <p for="">Tanggal Diagnosa &nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;{{ pasien.TglDiagnosa }}</p>
+          </div>
+          <div class="col-12">
+               <hr>
+               <h4 class="mb-3">Gejala yang Anda rasakan</h4>
+               <ol>
+                   {% for gejala in pasien.GejalaPasien.all %}
+                       <li>{{ gejala.IDGejala }}. {{ gejala.NamaGejala }}</li>
+                   {% endfor %}
+               </ol>
+          </div>
+          <div class="col-12">
+               <hr>
+               <h3 class="mb-2" style="font-size: 30px;">Hasil Diagnosa:&nbsp; {{ GejalaTerbesar.namaPenyakit }} {{ GejalaTerbesar.Persentase }}%</h3>
+               <p>Detail Penyakit</p>
+               <table class="table table-bordered">
+                    <thead>
+                         <tr>
+                              <th class="col-1 col-lg-2">Penyakit</th>
+                              <th class="">{{GejalaTerbesar.namaPenyakit }}</th>
+                         </tr>
+                    </thead>
+                    <tbody>
+                         <tr>
+                              <td>Definisi</td>
+                              <td class="text-justify">{{ GejalaTerbesar.Definisi }}</td>
+                         </tr>
+                         <tr>
+                              <td>Solusi</td>
+                              <td class="text-justify">{{ GejalaTerbesar.Solusi }}</td>
+                         </tr>
+                         <tr>
+                              <td>Pencegahan</td>
+                              <td>
+                                   {{ GejalaTerbesar.Pencegahan }}
+                              </td>
+                         </tr>
+                    </tbody>
+               </table>
+                <hr>
+               <h3 class="mb-3 mt-3">Hasil diagnosa lain berdasarkan gejala yang dipilih:</h3>
+              {% for lain in GejalaLain %}
+                  <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • {{ lain.namaPenyakit }} - Persentase {{ lain.Persentase }}%</h4>
+              {% endfor %}
+          </div>
+     </div>
+</div>
+{% endblock %}

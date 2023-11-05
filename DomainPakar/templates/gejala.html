@@ -1,0 +1,149 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+<div class="container">
+     <nav class="mt-5" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+               <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+               <li class="breadcrumb-item text-primary" aria-current="page">Daftar Gejala</li>
+          </ol>
+     </nav>
+
+
+     {% if login %}
+     <div class="container p-5 mt-3 card">
+          <form action="/tambahData/" method="POST">
+               {% csrf_token %}
+               <input type="hidden" name="TambahGejala" value="True">
+               <div class="mb-3">
+                    <label for="InputIDGejala" class="form-label">ID Gejala</label>
+                    <input name="ID" type="text" class="form-control" id="InputIDGejala" required>
+               </div>
+               <div class="mb-3">
+                    <label for="InputNamaGejala" class="form-label">Nama Gejala</label>
+                    <input name="nama" type="text" class="form-control" id="InputNamaGejala" required>
+               </div>
+               <div class="mb-3">
+                    <label for="InputPertanyaanGejala" class="form-label">Pertanyaan Gejala</label>
+                    <div class="form-floating">
+                         <textarea name="pertanyaan" class="form-control h-100" placeholder="Leave a comment here"
+                              id="InputPertanyaanGejala" required></textarea>
+                    </div>
+               </div>
+               <div class="mb-3">
+                    <label for="InputPenjelasanGejala" class="form-label">Penjelasan tentang Gejala</label>
+                    <div class="form-floating">
+                         <textarea name="penjelasan" class="form-control h-100" placeholder="Leave a comment here"
+                              id="InputPenjelasanGejala" required></textarea>
+                    </div>
+               </div>
+               <button type="submit" class="btn btn-primary"
+                    onclick="return confirm('Yakin tambah data gejala ?')">Tambah</button>
+          </form>
+     </div>
+     {% endif %}
+
+     {% if login %}
+     <table class="table my-5 table-bordered table-secondary border-2">
+          {% else %}
+          <table class="table my-5 table-bordered border-2">
+               {% endif %}
+               <thead>
+                    <tr>
+                         <th class="col-1" scope="col">ID Gejala</th>
+                         <th class="col-2" scope="col">Nama Gejala</th>
+                         <th class="col-2" scope="col">Pertanyaan Gejala</th>
+                         <th class="col-2" scope="col">Penjelasan Gejala</th>
+                         {% if login %}
+                         <th class="col-1" scope="col">Action</th>
+                         {% endif %}
+                    </tr>
+               </thead>
+               <tbody>
+                    {% for gejala in gejalas %}
+                    <tr>
+                         <th>{{ gejala.IDGejala }}</th>
+                         <td>{{ gejala.NamaGejala }}</td>
+                         <td>{{ gejala.Pertanyaan | truncatewords:20}}</td>
+                         <td>{{ gejala.SubPenjelasan | truncatewords:20 }}</td>
+                         {% if login %}
+                         <td>
+                              <button type="button" class="btn btn-warning mb-2" data-bs-toggle="modal"
+                                   data-bs-target="#editGejala{{ gejala.pk }}">
+                                   Edit
+                              </button>
+                              <!-- Modal -->
+                              <div class="modal fade" id="editGejala{{ gejala.pk }}" tabindex="-1"
+                                   aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                   <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                             <div class="modal-header">
+                                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Gejala</h1>
+                                                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                       aria-label="Close"></button>
+                                             </div>
+                                             <div class="modal-body">
+                                                  <form id="submitEdit{{ gejala.pk }}" action="/gejala/" method="POST">
+                                                       {% csrf_token %}
+                                                       <div class="mb-3">
+                                                            <label for="InputIDGejala" class="form-label">ID
+                                                                 Gejala</label>
+                                                            <input name="ID" type="text" class="form-control"
+                                                                 id="InputIDGejala" value="{{ gejala.IDGejala }}"
+                                                                 required>
+                                                       </div>
+                                                       <div class="mb-3">
+                                                            <label for="InputNamaGejala" class="form-label">Nama
+                                                                 Gejala</label>
+                                                            <input name="nama" type="text" class="form-control"
+                                                                 id="InputNamaGejala" value="{{ gejala.NamaGejala }}"
+                                                                 required>
+                                                       </div>
+                                                       <div class="mb-3">
+                                                            <label for="InputPertanyaanGejala"
+                                                                 class="form-label">Pertanyaan Gejala</label>
+                                                            <div class="form-floating">
+                                                                 <textarea name="pertanyaan" rows="5"
+                                                                      class="form-control h-100"
+                                                                      placeholder="Leave a comment here"
+                                                                      id="InputPertanyaanGejala"
+                                                                      required>{{ gejala.Pertanyaan }}</textarea>
+                                                            </div>
+                                                       </div>
+                                                       <div class="mb-3">
+                                                            <label for="InputPenjelasanGejala"
+                                                                 class="form-label">Penjelasan tentang Gejala</label>
+                                                            <div class="form-floating">
+                                                                 <textarea name="penjelasan" rows="5"
+                                                                      class="form-control h-100"
+                                                                      placeholder="Leave a comment here"
+                                                                      id="InputPenjelasanGejala"
+                                                                      required>{{ gejala.SubPenjelasan }}</textarea>
+                                                            </div>
+                                                       </div>
+                                                  </form>
+                                             </div>
+                                             <div class="modal-footer">
+                                                  <button type="button" class="btn btn-secondary"
+                                                       data-bs-dismiss="modal">Close</button>
+                                                  <button type="submit" form="submitEdit{{ gejala.pk }}"
+                                                       class="btn btn-primary"
+                                                       onclick="return confirm('Yakin menyimpan perubahan?')">Simpan</button>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                              <a class="btn btn-danger" href="/gejala?IDGejalaHapus={{ gejala.IDGejala }}"
+                                   onclick="return confirm('Yakin akan menghapus gejala {{ gejala.NamaGejala }} ?')">
+                                   Hapus
+                              </a>
+                         </td>
+                         {% endif %}
+                    </tr>
+                    {% endfor %}
+               </tbody>
+          </table>
+</div>
+
+<div class="container" style="height: 100px;"></div>
+{% endblock %}

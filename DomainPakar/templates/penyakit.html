@@ -1,0 +1,294 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+<div class="container">
+     <nav class="mt-5" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+               <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+               <li class="breadcrumb-item text-primary" aria-current="page">Daftar Penyakit</li>
+          </ol>
+     </nav>
+
+
+     {% if login %}
+     <div class="container p-5 mt-3 card">
+          <form action="/tambahData/" method="POST">
+               {% csrf_token %}
+               <input type="hidden" name="TambahPenyakit" value="True">
+               <div class="mb-3">
+                    <label for="InputIDPenyakit" class="form-label">ID Penyakit</label>
+                    <input name="ID" type="text" class="form-control" id="InputIDPenyakit" required>
+               </div>
+               <div class="mb-3">
+                    <label for="InputNamaPenyakit" class="form-label">Nama Penyakit</label>
+                    <input name="nama" type="text" class="form-control" id="InputNamaPenyakit" required>
+               </div>
+               <div class="mb-3">
+                    <label for="InputDefinisiPenyakit" class="form-label">Definisi Penyakit</label>
+                    <div class="form-floating">
+                         <textarea name="definisi" rows="5" class="form-control h-100"
+                              placeholder="Leave a comment here" id="InputDefinisiPenyakit" required></textarea>
+                    </div>
+               </div>
+               <div class="mb-3">
+                    <label for="InputSolusiPenyakit" class="form-label">Solusi Penyakit</label>
+                    <div class="form-floating">
+                         <textarea name="solusi" rows="5" class="form-control h-100" placeholder="Leave a comment here"
+                              id="InputSolusiPenyakit" required></textarea>
+                    </div>
+               </div>
+               <div class="mb-3">
+                    <label for="InputPencegahanPenyakit" class="form-label">Pencegahan Penyakit</label>
+                    <div class="form-floating">
+                         <textarea name="pencegahan" rows="5" class="form-control h-100"
+                              placeholder="Leave a comment here" id="InputPencegahanPenyakit" required></textarea>
+                    </div>
+               </div>
+               <div class="mb-3">
+                    <table class="table" id="dynamicTable12" style="width: 100%">
+                         <tr>
+                              <th scope="col" span="1" style="width: 25%;">Gejala Penyakit</th>
+                         </tr>
+                         <tr>
+                              <td> <select name="Gejala1" class="form-control form-select js" id="state"
+                                        required="required">
+                                        <option value="">-- Pilih Gejala --</option>
+                                        {% for gejala in gejalas %}
+                                        <option value="{{ gejala.IDGejala }}">{{ gejala.IDGejala }}.
+                                             {{ gejala.NamaGejala }}</option>
+                                        {% endfor %}
+                                   </select></td>
+                              <td><button type="button" name="add" id="addGejalaButton" class="btn btn-success">Tambah
+                                        Gejala</button>
+                              </td>
+                         </tr>
+                    </table>
+               </div>
+               <button type="submit" class="btn btn-primary"
+                    onclick="return confirm('Yakin tambah data penyakit ?')">Tambah</button>
+          </form>
+     </div>
+     {% endif %}
+
+     {% if login %}
+     <table class="table my-5 table-bordered table-secondary border-2">
+          {% else %}
+          <table class="table my-5 table-bordered border-2">
+               {% endif %}
+               <thead>
+                    <tr>
+                         <th class="col-2" scope="col">ID Penyakit</th>
+                         <th class="col-2" scope="col">Nama Penyakit</th>
+                         <th class="col-5" scope="col">Solusi</th>
+                         <th class="col-4" scope="col">Pencegahan</th>
+                         {% if login %}
+                         <th class="col-1" scope="col">Action</th>
+                         {% endif %}
+                    </tr>
+               </thead>
+               <tbody>
+                    {% for penyakit in penyakits %}
+                    <tr>
+                         <th scope="row">{{ penyakit.IDPenyakit }}</th>
+                         <td>{{ penyakit.NamaPenyakit }}</td>
+                         <td>{{ penyakit.Solusi | truncatewords:30 }}</td>
+                         <td>{{ penyakit.Pencegahan | truncatewords:30 }}</td>
+                         {% if login %}
+                         <td>
+                              <button type="button" class="btn btn-warning mb-2" data-bs-toggle="modal"
+                                   data-bs-target="#editGejala{{ penyakit.pk }}">
+                                   Edit
+                              </button>
+                              <!-- Modal -->
+                              <div class="modal fade" id="editGejala{{ penyakit.pk }}" tabindex="-1"
+                                   aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+                                        <div class="modal-content">
+                                             <div class="modal-header">
+                                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Penyakit</h1>
+                                                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                       aria-label="Close"></button>
+                                             </div>
+                                             <div class="modal-body">
+                                                  <form id="submitEdit{{ penyakit.pk }}" action="/penyakit/" method="POST" class="px-2">
+                                                       {% csrf_token %}
+                                                       <input type="hidden" name="TambahPenyakit" value="True">
+                                                       <div class="mb-3">
+                                                            <label for="InputIDPenyakit" class="form-label fw-bold">ID
+                                                                 Penyakit</label>
+                                                            <input name="ID" type="text" class="form-control"
+                                                                 id="InputIDPenyakit" value="{{ penyakit.IDPenyakit }}"
+                                                                 required>
+                                                       </div>
+                                                       <div class="mb-3">
+                                                            <label for="InputNamaPenyakit"
+                                                                 class="form-label fw-bold">Nama Penyakit</label>
+                                                            <input name="nama" type="text" class="form-control"
+                                                                 id="InputNamaPenyakit"
+                                                                 value="{{ penyakit.NamaPenyakit }}" required>
+                                                       </div>
+                                                       <div class="mb-3">
+                                                            <label for="InputDefinisiPenyakit"
+                                                                 class="form-label fw-bold">Definisi Penyakit</label>
+                                                            <div class="form-floating">
+                                                                 <textarea name="definisi" rows="7"
+                                                                      class="form-control h-100"
+                                                                      placeholder="Leave a comment here"
+                                                                      id="InputDefinisiPenyakit"
+                                                                      required>{{ penyakit.Definisi }}</textarea>
+                                                            </div>
+                                                       </div>
+                                                       <div class="mb-3">
+                                                            <label for="InputSolusiPenyakit"
+                                                                 class="form-label fw-bold">Solusi Penyakit</label>
+                                                            <div class="form-floating">
+                                                                 <textarea name="solusi" rows="7"
+                                                                      class="form-control h-100"
+                                                                      placeholder="Leave a comment here"
+                                                                      id="InputSolusiPenyakit"
+                                                                      required>{{ penyakit.Solusi }}</textarea>
+                                                            </div>
+                                                       </div>
+                                                       <div class="mb-3">
+                                                            <label for="InputPencegahanPenyakit"
+                                                                 class="form-label fw-bold">Pencegahan Penyakit</label>
+                                                            <div class="form-floating">
+                                                                 <textarea name="pencegahan" rows="7"
+                                                                      class="form-control h-100"
+                                                                      placeholder="Leave a comment here"
+                                                                      id="InputPencegahanPenyakit"
+                                                                      required>{{ penyakit.Pencegahan }}</textarea>
+                                                            </div>
+                                                       </div>
+                                                       <div class="mb-3">
+                                                            <table class="table" style="width: 100%">
+                                                                 <tr>
+                                                                      <th scope="col" span="1" style="width: 25%;">
+                                                                           Gejala Penyakit</th>
+                                                                 </tr>
+                                                                 <tr>
+                                                                      <td>
+                                                                           <form action="" method="post">
+                                                                                
+                                                                           </form>
+                                                                           <form id="GejalaTambah{{ penyakit.IDPenyakit }}"
+                                                                                method="POST" action="/penyakit/">
+                                                                                {% csrf_token %}
+                                                                                <input type="hidden" name="tambahGejalaKePenyakit" value="true">
+                                                                                <input type="hidden" name="IDPenyakit" value="{{ penyakit.IDPenyakit }}">
+                                                                                <select name="GejalaTambah"
+                                                                                     class="form-control form-select js"
+                                                                                     id="state" required="required">
+                                                                                     <option value="">-- Pilih Gejala --
+                                                                                     </option>
+                                                                                     {% for gejala in gejalas %}
+                                                                                     <option
+                                                                                          value="{{ gejala.IDGejala }}">
+                                                                                          {{ gejala.IDGejala }}.
+                                                                                          {{ gejala.NamaGejala }}
+                                                                                     </option>
+                                                                                     {% endfor %}
+                                                                                </select>
+                                                                           </form>
+                                                                      </td>
+                                                                      <td><button
+                                                                                form="GejalaTambah{{ penyakit.IDPenyakit }}"
+                                                                                type="submit"
+                                                                                class="btn btn-success"
+                                                                                onclick="return confirm('Tambah Gejala ini ke penyakit {{penyakit.NamaPenyakit}}?')"
+                                                                                >Tambah
+                                                                                Gejala</button>
+                                                                      </td>
+                                                                 </tr>
+                                                                 {% for gej in penyakit.GejalaPenyakit.all %}
+                                                                 <tr>
+                                                                      <td>
+                                                                           <form id="GejalaRemove{{ penyakit.IDPenyakit }}{{ gej.IDGejala }}"
+                                                                                method="POST" action="/penyakit/">
+                                                                                {% csrf_token %}
+                                                                               <input type="hidden" name="hapusGejalaDariPenyakit" value="true">
+                                                                               <input type="hidden" name="IDPenyakit" value="{{ penyakit.IDPenyakit }}">
+                                                                                <select
+                                                                                     name="GejalaID"
+                                                                                     class="form-control form-select js"
+                                                                                     id="state" required="required">
+                                                                                     <option value="{{ gej.IDGejala }}">
+                                                                                          {{ gej.IDGejala }}.
+                                                                                          {{ gej.NamaGejala }}</option>
+                                                                                </select>
+                                                                           </form>
+                                                                      </td>
+                                                                      <td><button type="submit"
+                                                                                form="GejalaRemove{{ penyakit.IDPenyakit }}{{ gej.IDGejala }}"
+                                                                                onclick="return confirm('Hapus Gejala ini ke penyakit {{penyakit.NamaPenyakit}}?')"
+                                                                                class="btn btn-danger">Remove</button>
+                                                                      </td>
+                                                                 </tr>
+                                                                 {% endfor %}
+                                                            </table>
+                                                       </div>
+                                                  </form>
+                                             </div>
+                                             <div class="modal-footer">
+                                                  <button type="button" class="btn btn-secondary"
+                                                       data-bs-dismiss="modal">Close</button>
+                                                  <button type="submit" form="submitEdit{{ penyakit.pk }}"
+                                                       class="btn btn-primary"
+                                                       onclick="return confirm('Yakin menyimpan perubahan?')">Simpan</button>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                              <a class="btn btn-info" href="/details/?IdPenyakit={{ penyakit.pk }}">Details</a>
+                         </td>
+                         {% endif %}
+                    </tr>
+                    {% endfor %}
+               </tbody>
+          </table>
+</div>
+
+<div class="container" style="height: 100px;"></div>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+     let initializeSelect2 = function () {
+          $('.js').select2();
+     }
+
+     var i = 1;
+     $("#addGejalaButton").click(function () {
+          ++i;
+          $("#dynamicTable12").append(`
+          <tr>
+               <td>
+                    <select name="Gejala${i}" id="" class="form-control form-select js" required="required">
+                         <option value="">-- Pilih Gejala --</option>
+                         {% for gejala in gejalas %}
+                                <option value="{{ gejala.IDGejala }}">{{ gejala.IDGejala }}. {{ gejala.NamaGejala }}</option>
+                         {% endfor %}
+                    </select>
+               </td>
+
+               <td>
+                    <button type="button" class="btn btn-danger bg-danger remove-tr">Remove</button>
+               </td>
+          </tr>
+          `);
+
+          initializeSelect2()
+     });
+
+     $(document).on('click', '.remove-tr', function () {
+          $(this).parents('tr').remove();
+     });
+
+     $(document).ready(function () {
+          initializeSelect2()
+     });
+</script>
+{% endblock %}

@@ -1,0 +1,168 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+     <nav class="mt-5" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+               <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+               <li class="breadcrumb-item text-primary" aria-current="page">Certain Factor</li>
+          </ol>
+     </nav>
+
+     <div class="container p-5 mt-3 card">
+          <form action="/certain-factor/" method="POST">
+               {% csrf_token %}
+               <div class="mb-3">
+                    <label class="form-label">Penyakit</label>
+                    <select name="Penyakit" class="form-control form-select js" id="state" required="required">
+                         <option value="">-- Pilih Gejala --</option>
+                         {% for penyakit in penyakits %}
+                         <option value="{{ penyakit.IDPenyakit }}">{{ penyakit.IDPenyakit }}.
+                              {{ penyakit.NamaPenyakit }}
+                         </option>
+                         {% endfor %}
+                    </select>
+               </div>
+               <div class="mb-3">
+                    <label for="InputIDGejala" class="form-label">Gejala</label>
+                    <select name="Gejala" class="form-control form-select js" id="state" required="required">
+                         <option value="">-- Pilih Gejala --</option>
+                         {% for gejala in gejalas %}
+                         <option value="{{ gejala.IDGejala }}">{{ gejala.IDGejala }}. {{ gejala.NamaGejala }}</option>
+                         {% endfor %}
+                    </select>
+               </div>
+               <div class="mb-3">
+                    <label for="InputMB" class="form-label">Nilai MB</label>
+                    <input type="number" step="0.1" value="0" min="0" max="1" class="form-control w-25" id="InputMB"
+                         name="MB">
+               </div>
+               <div class="mb-3">
+                    <label for="InputMD" class="form-label">Nilai MD</label>
+                    <input type="number" step="0.1" value="0" min="0" max="1" class="form-control w-25" id="InputMD"
+                         name="MD">
+               </div>
+               <button type="submit" class="btn btn-primary"
+                    onclick="return confirm('Yakin tambah data certain factor?')">Tambah</button>
+          </form>
+     </div>
+
+     {% if login %}
+     <table class="table my-5 table-bordered table-secondary border-2">
+          {% else %}
+          <table class="table my-5 table-bordered border-2">
+               {% endif %}
+               <thead>
+                    <tr>
+                         <th class="col-1" scope="col">Penyakit</th>
+                         <th class="col-2" scope="col">Gejala</th>
+                         <th class="col-2" scope="col">MB</th>
+                         <th class="col-2" scope="col">MD</th>
+                         <th class="col-2" scope="col">CF</th>
+                         <th class="col-1" scope="col">Action</th>
+                    </tr>
+               </thead>
+               <tbody>
+                    {% for cf in cfpakar %}
+                    <tr>
+                         <th>{{ cf.RelasiPenyakit.IDPenyakit }}.{{ cf.RelasiPenyakit.NamaPenyakit }}</th>
+                         <td>{{ cf.RelasiGejala.IDGejala }}.{{ cf.RelasiGejala.NamaGejala }}</td>
+                         <td>{{ cf.MB }}</td>
+                         <td>{{ cf.MD }}</td>
+                         <td>{{ cf.CF }}</td>
+                         {% if login %}
+                         <td>
+                              <button type="button" class="btn btn-warning mb-2" data-bs-toggle="modal"
+                                   data-bs-target="#editCF{{ cf.pk }}">
+                                   Edit
+                              </button>
+                              <!-- Modal -->
+                              <div class="modal fade" id="editCF{{ cf.pk }}" tabindex="-1"
+                                   aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                   <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                             <div class="modal-header">
+                                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Gejala</h1>
+                                                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                       aria-label="Close"></button>
+                                             </div>
+                                             <div class="modal-body">
+                                                  <form id="CF{{ cf.RelasiPenyakit.NamaPenyakit }}{{ cf.RelasiGejala.NamaGejala }}"
+                                                       action="/certain-factor-edit/" method="POST">
+                                                       {% csrf_token %}
+                                                       <div class="mb-3">
+                                                            <label class="form-label">Penyakit</label>
+                                                            <select name="Penyakit" class="form-control form-select js"
+                                                                 id="state" required="required">
+                                                                 <option value="{{ cf.RelasiPenyakit.IDPenyakit }}">
+                                                                      {{ cf.RelasiPenyakit.IDPenyakit }}.
+                                                                      {{ cf.RelasiPenyakit.NamaPenyakit }}</option>
+                                                                 {% for penyakit in penyakits %}
+                                                                 <option value="{{ penyakit.IDPenyakit }}">
+                                                                      {{ penyakit.IDPenyakit }}.
+                                                                      {{ penyakit.NamaPenyakit }}
+                                                                 </option>
+                                                                 {% endfor %}
+                                                            </select>
+                                                       </div>
+                                                       <div class="mb-3">
+                                                            <label for="InputIDGejala" class="form-label">Gejala</label>
+                                                            <select name="Gejala" class="form-control form-select js"
+                                                                 id="state" required="required">
+                                                                 <option value="{{ cf.RelasiGejala.IDGejala }}">
+                                                                      {{ cf.RelasiGejala.IDGejala }}.
+                                                                      {{ cf.RelasiGejala.NamaGejala }}</option>
+                                                                 {% for gejala in gejalas %}
+                                                                 <option value="{{ gejala.IDGejala }}">
+                                                                      {{ gejala.IDGejala }}. {{ gejala.NamaGejala }}
+                                                                 </option>
+                                                                 {% endfor %}
+                                                            </select>
+                                                       </div>
+                                                       <div class="mb-3">
+                                                            <label for="InputMB" class="form-label">Nilai MB</label>
+                                                            <input type="number" step="0.1" value="{{ cf.MB }}" min="0"
+                                                                 max="1" class="form-control w-25" id="InputMB"
+                                                                 name="MB">
+                                                       </div>
+                                                       <div class="mb-3">
+                                                            <label for="InputMD" class="form-label">Nilai MD</label>
+                                                            <input type="number" step="0.1" value="{{ cf.MD }}" min="0"
+                                                                 max="1" class="form-control w-25" id="InputMD"
+                                                                 name="MD">
+                                                       </div>
+                                                       <div class="mb-3">
+                                                            <label for="InputCF" class="form-label">Nilai CF</label>
+                                                            <input type="number" step="0.1" value="{{ cf.CF }}" min="0"
+                                                                 max="1" class="form-control w-25" id="InputCF"
+                                                                 name="CF" disabled>
+                                                       </div>
+                                                  </form>
+                                             </div>
+                                             <div class="modal-footer">
+                                                  <button type="button" class="btn btn-secondary"
+                                                       data-bs-dismiss="modal">Close</button>
+                                                  <button type="submit"
+                                                       form="CF{{ cf.RelasiPenyakit.NamaPenyakit }}{{ cf.RelasiGejala.NamaGejala }}"
+                                                       class="btn btn-primary"
+                                                       onclick="return confirm('Yakin menyimpan perubahan?')">Simpan</button>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                              <a class="btn btn-danger" href="/certain-factor?IDCFHapus={{ cf.pk }}"
+                                   onclick="return confirm('Yakin akan menghapus nilai CF ?')">
+                                   Hapus
+                              </a>
+                         </td>
+                         {% endif %}
+                    </tr>
+                    {% endfor %}
+               </tbody>
+          </table>
+</div>
+
+<div class="container" style="height: 100px;"></div>
+{% endblock %}

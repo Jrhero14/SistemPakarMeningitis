@@ -1,0 +1,190 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sistem Pakar Meningitis</title>
+  <link rel="stylesheet" href="{% static 'plugins/bootstrap/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'plugins/icofont/icofont.min.css' %}">
+  <link rel="stylesheet" href="{% static 'plugins/slick-carousel/slick/slick.css' %}">
+  <link rel="stylesheet" href="{% static 'plugins/slick-carousel/slick/slick-theme.css' %}">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <!-- font awesome style -->
+  <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+  <!-- header section strats -->
+  <nav class="navbar navbar-expand-lg custom_nav-container" style="background-color: #32bd81; height:80px">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        {% if user.username == 'admin' %}
+        <span>
+          Admin
+        </span>
+        {% else %}
+        <span>
+          Sistem Pakar Meningitis
+        </span>
+        {% endif %}
+      </a>
+
+      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarmain"
+        aria-controls="navbarmain" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="icofont-navigation-menu"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarmain">
+        <ul class="navbar-nav ml-auto">
+          {% if login %}
+          <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+          <li class="nav-item me-3"><a class="nav-link" href="/rekam-medis">Riwayat Medis</a></li>
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Knowledge Base
+              </button>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" href="/gejala">Daftar Gejala</a></li>
+                <li><a class="dropdown-item" href="/penyakit">Daftar Penyakit</a></li>
+                <li><a class="dropdown-item" href="/certain-factor">Nilai CF</a></li>
+              </ul>
+            </li>
+          </ul>
+          <li class="nav-item ps-4"><a class="btn btn-danger" href="/logout">logout <i
+                class="bi bi-box-arrow-right"></i></a></li>
+          {% else %}
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#tutorial">Tutorial</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/konsultasi">Diagnosis Sekarang</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- end header section -->
+
+  {% block content %}
+
+  {% endblock %}
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 footer_col">
+          <div class="footer_contact">
+            <h4>
+              Contact Us
+            </h4>
+            <div class="contact_link_box">
+              <a href="https://maps.app.goo.gl/vuDkDBfpiahhHCEq7">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <span>
+                  Lokasi kami
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span>
+                  Telepon
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <span>
+                  emailemail.com
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="footer_social">
+            <a href="">
+              <i class="fa fa-github" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 footer_col">
+          <div class="footer_detail">
+            <h4>
+              Tentang Kami
+            </h4>
+            <p>
+              Sistem Pakar Meningitis berbasis web ini adalah projek akhir untuk tugas mata kuliah Metode Kecerdasan
+              Buatan Lanjut
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mx-auto footer_col">
+          <div class="footer_link_box">
+            <h4>
+              Developers
+            </h4>
+            <div class="footer_links">
+              <a class="" href="">
+                Putu Ayu Novia Aryanti
+              </a>
+              <a class="" href="departments.html">
+                Jeremi Herodian Abednigo
+              </a>
+              <a class="" href="doctors.html">
+                Maharani Putri Suari
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-info">
+        <p>
+          &copy; <span id="displayYear"></span> All Rights Reserved By Kelompok 3
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!-- footer section -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+  </script>
+  <script src="{% static 'plugins/jquery/jquery.js' %}"></script>
+  <script src="{% static 'plugins/bootstrap/bootstrap.min.js' %}"></script>
+  <script src="{% static 'plugins/slick-carousel/slick/slick.min.js' %}"></script>
+  <script src="{% static 'plugins/shuffle/shuffle.min.js' %}"></script>
+
+  <script src="{% static 'plugins/google-map/gmap.js' %}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  {% block scripts %}
+
+  {% endblock %}
+
+</body>
+
+</html>
+
+{% load sweetify %}
+{% sweetify %}

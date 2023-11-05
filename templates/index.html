@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+
+<!-- landing intro -->
+<section class="slider_section ">
+  <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="container ">
+        <div class="row">
+          <div class="col-md-7">
+            <div class="detail-box">
+              <h1>
+                Diagnosis Meningitis secara online
+              </h1>
+              <p>
+                Kami mengundang Anda untuk menjelajahi sistem pakar ini, menjawab pertanyaan, dan mendapatkan
+                panduan yang spesifik untuk situasi Anda. Harap diingat bahwa ini adalah alat bantu yang disediakan
+                untuk pengetahuan umum, dan konsultasikan dengan tenaga medis jika Anda memiliki kekhawatiran serius
+                tentang kesehatan Anda.
+              </p>
+              <div class="btn-box">
+                <a href="#tutorial" class="btn1">
+                  How to use
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+<!-- end slider section -->
+</div>
+
+
+<!-- about section -->
+
+<section class="about_section">
+  <div class="container  ">
+    <div class="row">
+      <div class="col-md-6 ">
+        <div class="img-box">
+          <img src="{% static 'images/about-img.jpg' %}" alt="">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="detail-box">
+          <div class="heading_container">
+            <h2>
+              About <span>Us</span>
+            </h2>
+          </div>
+          <p>
+            Apakah Anda khawatir tentang gejala yang Anda alami atau ingin memahami lebih banyak tentang meningitis?
+            Sistem Pakar Meningitis kami siap membantu Anda.
+            <br> Sistem Pakar Meningitis kami yang memiliki diagnosis untuk empat jenis Meningitis yaitu Tuberculosis,
+            Viral(Virus), Bakteri, dan Jamur dirancang untuk memberikan informasi yang berharga tentang gejala,
+            diagnosis, pengobatan, dan saran mengenai kapan Anda sebaiknya mencari perawatan medis. Meskipun sistem
+            pakar ini tidak menggantikan saran dari dokter, ia dapat membantu Anda memahami lebih banyak tentang
+            kondisi ini.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-5">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+      <path fill="#178066" fill-opacity="2"
+        d="M0,32L26.7,26.7C53.3,21,107,11,160,16C213.3,21,267,43,320,58.7C373.3,75,427,85,480,74.7C533.3,64,587,32,640,32C693.3,32,747,64,800,96C853.3,128,907,160,960,170.7C1013.3,181,1067,171,1120,181.3C1173.3,192,1227,224,1280,224C1333.3,224,1387,192,1413,176L1440,160L1440,320L1413.3,320C1386.7,320,1333,320,1280,320C1226.7,320,1173,320,1120,320C1066.7,320,1013,320,960,320C906.7,320,853,320,800,320C746.7,320,693,320,640,320C586.7,320,533,320,480,320C426.7,320,373,320,320,320C266.7,320,213,320,160,320C106.7,320,53,320,27,320L0,320Z">
+      </path>
+    </svg>
+  </div>
+</section>
+
+<!-- end about section -->
+
+<!-- doctor section -->
+
+<section id="tutorial" class="doctor_section">
+
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2>
+        Tutorial
+      </h2>
+    </div>
+    <div class="row my-auto">
+      <div class="row">
+        <div class="col-lg-12 pt-4 mt-5">
+          <div class="horizontal-timeline">
+            <ul class="list-inline items">
+              <li class="list-inline-item items-list">
+                <div class="px-4">
+                  <h5 class="pt-2">1</h5>
+                  <p class="text-white">Klik tombol "Mulai diagnosis" untuk mendapatkan pertanyaan-pertanyaan yang
+                    berhubungan dengan empat jenis Meningitis
+                    (Tuberculosis, Virus, Jamur, dan Bakteri)
+                  </p>
+                </div>
+              </li>
+              <li class="list-inline-item items-list">
+                <div class="px-4">
+                  <h5 class="pt-2">2</h5>
+                  <p class="text-white"> Isi jawaban dengan skala tertinggi adalah gejala yang sangat dirasakan,
+                    dan skala terendah adalah gejala yang tidak terlalu bahkan tidak anda rasakan.
+                  </p>
+                </div>
+              </li>
+              <li class="list-inline-item items-list">
+                <div class="px-4">
+                  <h5 class="pt-2">3</h5>
+                  <p class="text-white">Setelah anda selesai mengisi seluruh pertanyaan dengan kondisi-kondisi yang anda
+                    rasakan,
+                    tekan tombol submit agar sistem menghasilkan diagnosis untuk anda.
+                  </p>
+                </div>
+              </li>
+              <li class="list-inline-item items-list">
+                <div class="px-4">
+                  <h5 class="pt-2">4</h5>
+                  <p class="text-white">Hasil akan ditampilkan dengan bentuk chart batang/bar yang menampilakan keempat
+                    jenis Meningitis
+                    tersebut, tiap bar memiliki nilai maksimal 100 persen.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center">
+    <div class="align-content-center mt-5 btn-box">
+      <a href="/konsultasi">
+        Mulai diagnosis
+      </a>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- end doctor section -->
+
+<!-- client section -->
+
+<section class="client_section layout_padding-bottom">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+    <path fill="#178066" fill-opacity="2"
+      d="M0,128L26.7,128C53.3,128,107,128,160,138.7C213.3,149,267,171,320,160C373.3,149,427,107,480,112C533.3,117,587,171,640,165.3C693.3,160,747,96,800,96C853.3,96,907,160,960,181.3C1013.3,203,1067,181,1120,149.3C1173.3,117,1227,75,1280,69.3C1333.3,64,1387,96,1413,112L1440,128L1440,0L1413.3,0C1386.7,0,1333,0,1280,0C1226.7,0,1173,0,1120,0C1066.7,0,1013,0,960,0C906.7,0,853,0,800,0C746.7,0,693,0,640,0C586.7,0,533,0,480,0C426.7,0,373,0,320,0C266.7,0,213,0,160,0C106.7,0,53,0,27,0L0,0Z">
+    </path>
+  </svg>
+  <div class="container">
+    <div class="heading_container heading_center ">
+      <h2>
+        Testimonial
+      </h2>
+    </div>
+    <div id="carouselExample2Controls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="row">
+            <div class="col-md-11 col-lg-10 mx-auto">
+              <div class="box">
+                <div class="img-box">
+                  <img src="{% static 'images/client.jpg' %}" alt="" />
+                </div>
+                <div class="detail-box">
+                  <div class="name">
+                    <h6>
+                      Alan Emerson
+                    </h6>
+                  </div>
+                  <p>
+                    Enim consequatur odio assumenda voluptas voluptatibus esse nobis officia. Magnam, aspernatur
+                    nostrum explicabo, distinctio laudantium delectus deserunt quia quidem magni corporis earum
+                    inventore totam consectetur corrupti! Corrupti, nihil sunt? Natus.
+                  </p>
+                  <i class="fa fa-quote-left" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="row">
+            <div class="col-md-11 col-lg-10 mx-auto">
+              <div class="box">
+                <div class="img-box">
+                  <img src="{% static 'images/client.jpg' %}" alt="" />
+                </div>
+                <div class="detail-box">
+                  <div class="name">
+                    <h6>
+                      Alan Emerson
+                    </h6>
+                  </div>
+                  <p>
+                    Enim consequatur odio assumenda voluptas voluptatibus esse nobis officia. Magnam, aspernatur
+                    nostrum explicabo, distinctio laudantium delectus deserunt quia quidem magni corporis earum
+                    inventore totam consectetur corrupti! Corrupti, nihil sunt? Natus.
+                  </p>
+                  <i class="fa fa-quote-left" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="row">
+            <div class="col-md-11 col-lg-10 mx-auto">
+              <div class="box">
+                <div class="img-box">
+                  <img src="{% static 'images/client.jpg' %}" alt="" />
+                </div>
+                <div class="detail-box">
+                  <div class="name">
+                    <h6>
+                      Alan Emerson
+                    </h6>
+                  </div>
+                  <p>
+                    Enim consequatur odio assumenda voluptas voluptatibus esse nobis officia. Magnam, aspernatur
+                    nostrum explicabo, distinctio laudantium delectus deserunt quia quidem magni corporis earum
+                    inventore totam consectetur corrupti! Corrupti, nihil sunt? Natus.
+                  </p>
+                  <i class="fa fa-quote-left" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel_btn-container">
+        <a class="carousel-control-prev" href="#carouselExample2Controls" role="button" data-slide="prev">
+          <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExample2Controls" role="button" data-slide="next">
+          <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- end client section -->
+
+{% endblock %}

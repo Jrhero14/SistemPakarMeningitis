@@ -1,0 +1,52 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+<div class="container">
+     <nav class="mt-5" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+               <li class="breadcrumb-item"><a href="/">Home</a></li>
+               <li class="breadcrumb-item"><a href="/penyakit">Daftar Penyakit</a></li>
+               <li class="breadcrumb-item text-primary" aria-current="page">Details</li>
+          </ol>
+     </nav>
+     <div class="container pt-3">
+          <div class="d-flex mb-3 align-items-center">
+               <h4 class="me-3">ID Penyakit:</h4>
+               <h5 class="fw-medium">{{ PenyakitObj.IDPenyakit }}</h5>
+          </div>
+          <div class="d-flex mb-3 align-items-center">
+               <h4 class="me-3">Nama Penyakit:</h4>
+               <h5 class="fw-medium">{{ PenyakitObj.NamaPenyakit }}</h5>
+          </div>
+          <div class="d-flex mb-3 flex-column">
+               <h4 class="me-3">Definisi:</h4>
+               <p class="fw-medium">{{ PenyakitObj.Definisi }}</p>
+          </div>
+          <div class="d-flex mb-3 flex-column">
+               <h4 class="me-3">Solusi:</h4>
+               <p class="fw-medium">{{ PenyakitObj.Solusi }}</p>
+          </div>
+          <div class="d-flex mb-3 flex-column">
+               <h4 class="me-3">Pencegahan:</h4>
+               <p class="fw-medium">{{ PenyakitObj.Pencegahan }}</p>
+          </div>
+          <h4>Gejala</h4>
+          <table class="table">
+               <thead>
+                    <tr>
+                         <th class="col-3" scope="col">ID Gejala</th>
+                         <th class="col-9" scope="col">Gejala</th>
+                    </tr>
+               </thead>
+               <tbody>
+               {% for gejala in Gejalas %}
+                   <tr>
+                         <th scope="row">{{ gejala.IDGejala }}</th>
+                         <td>{{ gejala.NamaGejala }}</td>
+                    </tr>
+               {% endfor %}
+               </tbody>
+          </table>
+     </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+     <nav class="mt-5" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+               <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+               <li class="breadcrumb-item text-primary" aria-current="page">Riwayat Medis</li>
+          </ol>
+     </nav>
+
+     <div class="container p-5 mt-3 card">
+          <form action="/rekam-medis/" method="GET">
+               <h3>Cari Data Pasien</h3>
+               <div class="mb-3">
+                    <label for="InputIDPasien" class="form-label">ID Pasien</label>
+                    <input name="IDPasien" type="text" class="form-control" id="InputIDPasien">
+               </div>
+               <div class="mb-3">
+                    <label for="InputNama" class="form-label">Nama Pasien</label>
+                    <input name="namaPasien" type="text" class="form-control" id="InputNama">
+               </div>
+               <button type="submit" class="btn btn-primary">Cari</button>
+          </form>
+     </div>
+
+     {% if login %}
+     <table class="table my-5 table-bordered table-secondary border-2">
+          {% else %}
+          <table class="table my-5 table-bordered border-2">
+               {% endif %}
+               <thead>
+                    <tr>
+                         <th class="col-1" scope="col">ID Pasien</th>
+                         <th class="col-2" scope="col">Nama Lengkap</th>
+                         <th class="col-2" scope="col">Nomor Telp</th>
+                         {% if login %}
+                         <th class="col-1" scope="col">Action</th>
+                         {% endif %}
+                    </tr>
+               </thead>
+               <tbody>
+                    {% for pasien in pasiens %}
+                    <tr>
+                         <th>{{ pasien.IDPasien }}</th>
+                         <td>{{ pasien.NamaLengkap }}</td>
+                         {% if pasien.Diagnosis is None %}
+                         <td>Belum Terdiagnosis</td>
+                         {% else %}
+                         <td>{{ pasien.NomorTelp }}</td>
+                         {% endif %}
+                         {% if login %}
+                         <td>
+                              <a class="btn btn-warning"
+                                   href="/detail-pasien?IDPasien={{ pasien.IDPasien }}">Details</a>
+                         </td>
+                         {% endif %}
+                    </tr>
+                    {% endfor %}
+               </tbody>
+          </table>
+</div>
+
+<div class="container" style="height: 100px;"></div>
+{% endblock %}

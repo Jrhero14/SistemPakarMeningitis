@@ -1,0 +1,59 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+     <nav class="mt-5" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+               <li class="breadcrumb-item text-primary" aria-current="page"><a href="/dashboard"
+                         class="text-primary">Dashboard</a></li>
+          </ol>
+     </nav>
+
+     <div class="container mt-3">
+          <div class="row justify-content-between">
+               <div class="col-2 p-3 bg-secondary rounded rounded-4">
+                    <h2 class="text-white">{{ totalPenyakit }} <i class="bi bi-virus2"></i></h2>
+                    <h3 class="text-white">Penyakit</h3>
+               </div>
+               <div class="col-3 p-3 bg-warning rounded rounded-4">
+                    <h2 class="text-white">{{ totalGejala }} <i class="bi bi-lungs-fill"></i></h2>
+                    <h3 class="text-white">Total Gejala</h3>
+               </div>
+
+               <div class="col-3 p-3 bg-primary rounded rounded-4">
+                    <h2 class="text-white">{{ totalCFPakar }} <i class="bi bi-prescription2"></i></h2>
+                    <h3 class="text-white">Total CF pakar</h3>
+               </div>
+               <div class="col-3 p-3 bg-success rounded rounded-4">
+                    <h2 class="text-white">{{ totalRekamMedis }} <i class="bi bi-clipboard2-pulse-fill"></i></h2>
+                    <h3 class="text-white">Total Rekam Medis</h3>
+               </div>
+          </div>
+     </div>
+
+     <div class="container mt-5">
+          <h3 class="mb-3">Data Rules</h3>
+          <table class="table table-bordered border-secondary">
+               <thead class="table-secondary">
+                    <tr>
+                         <th scope="col">Rule</th>
+                         <th scope="col">Kaidah</th>
+                    </tr>
+               </thead>
+               <tbody>
+                    {% for rule in rules %}
+                    <tr>
+                         <th scope="row">{{ rule.Rule }}</th>
+                         <td>{{ rule.Kaidah }}</td>
+                    </tr>
+                    {% endfor %}
+               </tbody>
+          </table>
+     </div>
+
+</div>
+
+<div class="container" style="height: 100px;"></div>
+
+{% endblock %}
