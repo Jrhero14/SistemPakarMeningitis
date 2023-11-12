@@ -3,7 +3,7 @@
 
 {% block content %}
 <section class="banner">
-     <div class="container my-3">
+     <div class="container my-5">
           <div class="row gx-2">
                <div class="col-6">
                     <div class="block border border-3 rounded-3 bg-white px-3 py-5">
@@ -14,11 +14,11 @@
                                         <input type="text" class="form-control" placeholder="Cari Gejala"
                                              aria-label="Cari Gejala" aria-describedby="button-addon2"
                                              name="NamaGejala">
-                                        <button class="btn btn-primary" type="submit" id="button-addon2">Cari <i class="bi bi-search"></i></button>
+                                        <button class="btn btn-primary" type="submit" id="button-addon2"><i class="bi bi-search"></i> Cari</button>
                                    </form>
                               </div>
                          </form>
-                         <a class="btn btn-warning btn-sm" href="/pertanyaan/">Tampilkan Semua Gejala <i class="bi bi-filter-left"></i></a>
+                         <a class="btn btn-warning btn-sm" href="/pertanyaan/"><i class="bi bi-filter"></i> Tampilkan Semua Gejala</a>
                          <table class="table my-5 table-bordered border-2">
                               <thead>
                                    <tr>
@@ -85,7 +85,7 @@
                                                                                           autocomplete="off" />
                                                                                      Kemungkinan Besar Iya <br> 80%
                                                                                 </label>
-                                                                                <label class="btn btn-outline-success">
+                                                                                <label class="btn btn-outline-warning">
                                                                                      <input type="radio" value="60"
                                                                                           class="btn-check"
                                                                                           name="tingkat" id="tingkat"
@@ -108,13 +108,6 @@
                                                                                           autocomplete="off" />
                                                                                      Sedikit <br> 20%
                                                                                 </label>
-                                                                                <label class="btn btn-outline-danger">
-                                                                                     <input type="radio" value="0"
-                                                                                          class="btn-check"
-                                                                                          name="tingkat" id="tingkat"
-                                                                                          autocomplete="off" />
-                                                                                     Sangat Tidak Setuju <br> 0%
-                                                                                </label>
                                                                            </div>
                                                                       </div>
                                                                  </form>
@@ -124,9 +117,37 @@
                                                                       data-bs-dismiss="modal">Close</button>
                                                                  <button type="submit"
                                                                       form="PilihGejalaPasien{{ gejala.pk }}"
-                                                                      class="btn btn-primary"
-                                                                      onclick="return confirm('Yakin pilih gejala {{gejala.NamaGejala}}?')">Pilih
+                                                                      class="btn btn-primary">Pilih
                                                                       Gejala</button>
+                                                                 <script>
+                                                                      document.querySelector('#PilihGejalaPasien{{ gejala.pk }}').addEventListener(
+                                                                           'submit',
+                                                                           function (e) {
+                                                                                var form = this;
+
+                                                                                e
+                                                                           .preventDefault(); // <--- prevent form from submitting
+
+                                                                                Swal.fire({
+                                                                                     title: "Kamu yakin pilih gejala {{ gejala.NamaGejala }} ?",
+                                                                                     icon: "question",
+                                                                                     showCancelButton: true,
+                                                                                     confirmButtonColor: "#3085d6",
+                                                                                     cancelButtonColor: "#d33",
+                                                                                     confirmButtonText: "Yes"
+                                                                                }).then((result) => {
+                                                                                     if (result.isConfirmed) {
+                                                                                          Swal.fire({
+                                                                                               title: 'Memproses mohon tunggu',
+                                                                                               allowEscapeKey: false,
+                                                                                               allowOutsideClick: false,
+                                                                                          });
+                                                                                          swal.showLoading();
+                                                                                          form.submit();
+                                                                                     }
+                                                                                });
+                                                                           });
+                                                                 </script>
                                                             </div>
                                                        </div>
                                                   </div>
@@ -170,23 +191,79 @@
                                         <td class="text-danger">Sangat Tidak Setuju</td>
                                         {% endif %}
                                         <td class="text-center">
-                                             <form action="/tambah-gejala-pasien/" method="POST">
+                                             <form id="batalForm{{gejalaPasien.KeyGejala.IDGejala}}" action="/tambah-gejala-pasien/" method="POST">
                                                   {% csrf_token %}
                                                   <input type="hidden" name="Delete" value="TRUE">
                                                   <input type="hidden" name="IDGejala"
                                                        value="{{gejalaPasien.KeyGejala.IDGejala}}">
-                                                  <button type="submit" class="btn btn-danger"
-                                                       onclick="return confirm('Batal Memilih Gejala {{gejalaPasien.KeyGejala.NamaGejala}}?')">Batal</button>
+                                                  <button type="submit" class="btn btn-danger">Batal</button>
                                              </form>
+                                             <script>
+                                                  document.querySelector('#batalForm{{gejalaPasien.KeyGejala.IDGejala}}').addEventListener(
+                                                       'submit',
+                                                       function (e) {
+                                                            var form = this;
+
+                                                            e.preventDefault(); // <--- prevent form from submitting
+
+                                                            Swal.fire({
+                                                                 title: "Batal Memilih Gejala {{gejalaPasien.KeyGejala.NamaGejala}}?",
+                                                                 icon: "question",
+                                                                 showCancelButton: true,
+                                                                 confirmButtonColor: "#3085d6",
+                                                                 cancelButtonColor: "#d33",
+                                                                 confirmButtonText: "Yes"
+                                                            }).then((result) => {
+                                                                 if (result.isConfirmed) {
+                                                                      Swal.fire({
+                                                                           title: 'Memproses mohon tunggu',
+                                                                           allowEscapeKey: false,
+                                                                           allowOutsideClick: false,
+                                                                      });
+                                                                      swal.showLoading();
+                                                                      form.submit();
+                                                                 }
+                                                            });
+                                                       });
+                                             </script>
                                         </td>
                                    </tr>
                                    {% endfor %}
                               </tbody>
                          </table>
-                         <form action="/kumpulkan/" method="POST">
+                         <form id="lakukanDiagnosaForm" action="/kumpulkan/" method="POST">
                               {% csrf_token %}
-                              <button class="btn btn-success">Lakukan Diagnosa <i class="bi bi-clipboard2-pulse-fill"></i></button>
+                              <button class="btn btn-success" type="submit"><i class="bi bi-clipboard2-pulse"></i>Lakukan Diagnosa</button>
                          </form>
+                         <script>
+                              document.querySelector('#lakukanDiagnosaForm').addEventListener(
+                                   'submit',
+                                   function (e) {
+                                        var form = this;
+
+                                        e
+                                   .preventDefault(); // <--- prevent form from submitting
+
+                                        Swal.fire({
+                                             title: "Lakukan diagnosa sekarang ?",
+                                             icon: "question",
+                                             showCancelButton: true,
+                                             confirmButtonColor: "#3085d6",
+                                             cancelButtonColor: "#d33",
+                                             confirmButtonText: "Yes"
+                                        }).then((result) => {
+                                             if (result.isConfirmed) {
+                                                  Swal.fire({
+                                                       title: 'Memproses mohon tunggu',
+                                                       allowEscapeKey: false,
+                                                       allowOutsideClick: false,
+                                                  });
+                                                  swal.showLoading();
+                                                  form.submit();
+                                             }
+                                        });
+                                   });
+                         </script>
                     </div>
                </div>
           </div>
@@ -194,4 +271,11 @@
 </section>
 <script src="//code.jquery.com/jquery.min.js"></script>
 <script src="jquery.twbs-toggle-buttons.min.js"></script>
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+
+</script>
 {% endblock %}
