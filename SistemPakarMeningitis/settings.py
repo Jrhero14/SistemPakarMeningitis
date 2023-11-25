@@ -95,10 +95,10 @@ WSGI_APPLICATION = 'SistemPakarMeningitis.wsgi.application'
 DATABASES = {
   'default': {
     'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'Meningitis1',
+    'NAME': 'meninigitisdb',
     'USER': 'jeremikucayang14',
-    'PASSWORD': 'LcZv60TnsVtA',
-    'HOST': 'ep-divine-band-56768621.ap-southeast-1.aws.neon.tech',
+    'PASSWORD': '************',
+    'HOST': 'ep-bold-frog-72118141.ap-southeast-1.aws.neon.tech',
     'PORT': '5432',
     'OPTIONS': {'sslmode': 'require'},
   }

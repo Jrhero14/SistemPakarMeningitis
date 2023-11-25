@@ -3,9 +3,9 @@ from django.db import models
 # Create your models here.
 class Gejala(models.Model):
     IDGejala = models.CharField(max_length=4, null=True, blank=True)
-    NamaGejala = models.CharField(max_length=100, null=True, blank=True)
-    Pertanyaan = models.CharField(max_length=255, null=True, blank=True)
-    SubPenjelasan = models.CharField(max_length=255, null=True, blank=True)
+    NamaGejala = models.TextField(null=True, blank=True)
+    Pertanyaan = models.TextField(null=True, blank=True)
+    SubPenjelasan = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.id}. {self.NamaGejala}'
